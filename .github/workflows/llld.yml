@@ -38,8 +38,8 @@ jobs:
     - name: Setup Configuration for Kernel
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        echo "CONFIG_HAVE_KPROBES=y" >> arch/arm64/configs/sdm845-pref_defconfig
-        echo "CONFIG_KPROBE_EVENTS=y" >> arch/arm64/configs/sdm845-pref_defconfig
+        echo "CONFIG_HAVE_KPROBES=y" >> arch/arm64/configs/sdm845-NX616J-perf_defconfig
+        echo "CONFIG_KPROBE_EVENTS=y" >> arch/arm64/configs/sdm845-NX616J-perf_defconfig
 
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2
@@ -51,7 +51,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang/bin:$PATH
-        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- CC=clang O=out ARCH=arm64 sdm845-pref_defconfig
+        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- CC=clang O=out ARCH=arm64 sdm845-NX616J-perf_defconfig
         make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- CC="ccache clang" O=out ARCH=arm64
 
     - name: Make Anykernel3
