@@ -51,8 +51,8 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang/bin:$PATH
-        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- CC=clang O=out ARCH=arm64 sdm845-NX616J-perf_defconfig
-        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- CC="ccache clang" O=out ARCH=arm64
+        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- CC=clang O=out ARCH=arm64 CFLAGS="-Wno-enum-conversion" sdm845-NX616J-perf_defconfig
+        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- CC="ccache clang" O=out ARCH=arm64 CFLAGS="-Wno-enum-conversion"
 
     - name: Make Anykernel3
       run: |
