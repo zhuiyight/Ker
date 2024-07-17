@@ -49,4 +49,23 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Image
-        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image Image.gz-dtb Image.gz
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image
+
+    - name: Upload Image.gz-dtb
+      uses: actions/upload-artifact@v3
+      with:
+        name: Image.gz-dtb
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image.gz-dtb
+
+    - name: Upload Image.gz
+      uses: actions/upload-artifact@v3
+      with:
+        name: Image.gz
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image.gz
+
+
+    - name: Upload dtbo.img
+      uses: actions/upload-artifact@v3
+      with:
+        name: dtbo.img
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/dtbo.img
