@@ -1,0 +1,76 @@
+name: gcc
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
+      CCACHE_NOHASHDIR: "true"
+      CCACHE_MAXSIZE: "2G"
+      CCACHE_HARDLINK: "true"
+      
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
+        fetch-depth: 100
+
+    - name: Setup build kernel environment
+      run: |
+        echo "BUILD_TIME=$(TZ=Asia/Kuala_Lumpur date "+%Y %m %d %H,%M")" >> $GITHUB_ENV
+        sudo apt-get update -y 
+        sudo apt install binutils make python2 libssl-dev flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git git-lfs bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev adb fastboot -y
+        mkdir -p $GITHUB_WORKSPACE/kernel_workspace
+
+    - name: Download gcc
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace
+        git clone https://github.com/Coconutat/ToolChains.git --dept=1 -b linaro_gcc_4.9
+        
+    - name: Download kernel source
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace
+        git clone https://github.com/zhuiyight/nx616j android-kernel --depth=1
+
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: build-kernel-${{ env.UPLOADNAME }}
+        max-size: 2G
+
+    - name: Build kernel
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
+        sudo ln -sf /usr/bin/python2.7 /usr/bin/python
+        export PATH=$GITHUB_WORKSPACE/kernel_workspace/ToolChains/bin:$PATH
+        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64 sdm845-NX616J-perf_defconfig
+        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64
+    
+
+    - name: Upload Image
+      uses: actions/upload-artifact@v3
+      with:
+        name: Image
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image
+
+    - name: Upload Image.gz-dtb
+      uses: actions/upload-artifact@v3
+      with:
+        name: Image.gz-dtb
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image.gz-dtb
+
+    - name: Upload Image.gz
+      uses: actions/upload-artifact@v3
+      with:
+        name: Image.gz
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image.gz
+
+
+    - name: Upload dtbo.img
+      uses: actions/upload-artifact@v3
+      with:
+        name: dtbo.img
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/dtbo.img
