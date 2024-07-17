@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Image
-        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image
+        path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image Image.gz-dtb Image.gz
