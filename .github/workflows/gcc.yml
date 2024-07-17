@@ -30,7 +30,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir ToolChain
-        wget -O gcc.tar.xz https://github.com/tomxi1997/Toolchain-for-aarch64-hosts/releases/download/v6/google_gcc-4.9-main-20240120.tar.xz
+        wget -O gcc.tar.xz https://releases.linaro.org/components/toolchain/binaries/4.9-2017.01/aarch64-elf/gcc-linaro-4.9.4-2017.01-x86_64_aarch64-elf.tar.xz
         tar -C ToolChain/ -xf gcc.tar.xz
         
     - name: Download kernel source
