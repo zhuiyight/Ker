@@ -1,4 +1,4 @@
-name: Build Kernel
+name: Proton-Clang
 on:
   workflow_dispatch:
 
