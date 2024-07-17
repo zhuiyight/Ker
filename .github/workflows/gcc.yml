@@ -29,7 +29,8 @@ jobs:
     - name: Download gcc
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/Coconutat/ToolChains.git --dept=1 -b linaro_gcc_4.9
+        mkdir ToolChain && wget -O gcc.tar.gz https://github.com/tomxi1997/Toolchain-for-aarch64-hosts/releases/download/v6/google_gcc-4.9-main-20240120.tar.xz
+        tar -C ToolChain/ -xf gcc.tar.gz
         
     - name: Download kernel source
       run: |
@@ -56,4 +57,3 @@ jobs:
       with:
         name: Image
         path: kernel_workspace/android-kernel/out/arch/arm64/boot/Image
-        
