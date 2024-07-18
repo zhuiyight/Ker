@@ -29,7 +29,7 @@ jobs:
     - name: Download gcc
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/Coconutat/ToolChains.git --dept=1 -b linaro_gcc_4.9
+        git clone https://github.com/dandelion64-Archives/aarch64-linux-android-4.9 --dept=1
         
     - name: Download kernel source
       run: |
@@ -46,7 +46,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         sudo ln -sf /usr/bin/python2.7 /usr/bin/python
-        export PATH=$GITHUB_WORKSPACE/kernel_workspace/ToolChains/bin:$PATH
+        export PATH=$GITHUB_WORKSPACE/kernel_workspace/aarch64-linux-android-4.9/bin:$PATH
         make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64 NX616J_defconfig
         make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64
     
