@@ -29,8 +29,7 @@ jobs:
     - name: Download gcc
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir ToolChain && wget -O gcc.tar.gz https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/heads/pie-release.tar.gz
-        tar -C ToolChain/ -xf gcc.tar.gz
+        git clone https://github.com/Coconutat/ToolChains.git --dept=1 -b google_gcc_pie
         
     - name: Download kernel source
       run: |
@@ -47,7 +46,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         sudo ln -sf /usr/bin/python2.7 /usr/bin/python
-        export PATH=$GITHUB_WORKSPACE/kernel_workspace/ToolChain/bin:$PATH
+        export PATH=$GITHUB_WORKSPACE/kernel_workspace/ToolChains/bin:$PATH
         make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64 NX616J_defconfig
         make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64
     
