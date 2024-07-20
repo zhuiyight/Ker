@@ -34,7 +34,7 @@ jobs:
     - name: Download kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/curtisy1/android_kernel_nubia_nx606j.git android-kernel --depth=1
+        git clone https://github.com/zhuiyight/android_kernel_nubia_sdm845 android-kernel --depth=1
 
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2
@@ -47,7 +47,7 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         sudo ln -sf /usr/bin/python2.7 /usr/bin/python
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/ToolChains/bin:$PATH
-        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64 lineage_nx606j_defconfig
+        make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64 NX616J_defconfig
         make -j$(nproc --all) CROSS_COMPILE=aarch64-linux-gnu- O=out ARCH=arm64
     
 
