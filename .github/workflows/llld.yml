@@ -28,7 +28,7 @@ jobs:
     - name: Download kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/zhuiyight/nx6 android-kernel --depth=1
+        git clone https://github.com/zhuiyight/android_kernel_nubia_nx606j.git android-kernel --depth=1 -b a
 
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2
