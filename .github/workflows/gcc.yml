@@ -34,19 +34,9 @@ jobs:
     - name: Download kernel source
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/zhuiyight/android_kernel_nubia_nx606j.git android-kernel --depth=1 -b a
+        git clone https://github.com/zhuiyight/nx616j android-kernel --depth=1
         
-    - name: Setup KernelSU
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
-
-    - name: Setup Configuration for Kernel
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        echo "CONFIG_HAVE_KPROBES=y" >> arch/arm64/configs/NX616J_defconfig
-        echo "CONFIG_KPROBE_EVENTS=y" >> arch/arm64/configs/NX616J_defconfig
-        
+    
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2
       with:
